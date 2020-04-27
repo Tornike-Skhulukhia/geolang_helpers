@@ -26,7 +26,11 @@ def normalize_surname(surname):
     vowels = 'აეიოუ'
 
     # წოდებითი
-    if last_letter == 'ო': return f'{surname[:-1]}ი'
+    if last_letter == 'ო':
+        if last_3_letters[0] in vowels:
+            return f'{surname[:-1]}ი'
+        else:
+            return surname
 
     # მოთხრობითი
     if last_letter == 'მ': return f'{surname[:-1]}'
@@ -109,10 +113,18 @@ if __name__ == '__main__':
         'ბოდაველით': 'ბოდაველი',
         'ბოდაველად': 'ბოდაველი',
         'ბოდაველო': 'ბოდაველი',
+
+        'სერგეენკო': 'სერგეენკო',
+        'სერგეენკომ': 'სერგეენკო',
+        'სერგეენკოს': 'სერგეენკო',
+        'სერგეენკოს': 'სერგეენკო',
+        'სერგეენკოთ': 'სერგეენკო',
+        'სერგეენკოდ': 'სერგეენკო',
+        'სერგეენკო': 'სერგეენკო',
     }
 
     for i, correct in tests.items():
         res = normalize_surname(i)
         if res != correct:
-            print(i, "-->", res, "!=", correct)
+            print(" Error: ", i, "-->", res, "!=", correct)
         # assert normalize_surname(i) == correct
